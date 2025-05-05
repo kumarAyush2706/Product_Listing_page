@@ -6,15 +6,15 @@ import { fetchProducts } from "../../services/productServices.js";
 import "./ProductListPage.css";
 import Footer from "../../components/Footer/Footer.jsx";
 import Filter from "../../components/Filter/FIlter.jsx";
-import Login from "../LoginSignUP/Login.jsx"
+import Login from "../LoginSignUP/Login.jsx";
 import { Menu, MenuItem } from "@mui/material";
 
 const ProductListPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showFilter, setShowFilter] = useState(true);
-  const [fileterdProducts, setfileterdProducts] = useState(products)
-  const [selectedFilters, setSelectedFilters] = useState([])
+  const [fileterdProducts, setfileterdProducts] = useState(products);
+  const [selectedFilters, setSelectedFilters] = useState([]);
 
   useEffect(() => {
     fetchProducts()
@@ -73,46 +73,51 @@ const ProductListPage = () => {
               </svg>
             </p>
             <p
-        onClick={handleClick}
-        style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "4px" }}
-      >
-        RECOMMENDED
-        <svg
-          width="12"
-          height="7"
-          viewBox="0 0 12 7"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0.721251 1.00017L5.06792 5.34684C5.58125 5.86018 6.42125 5.86018 6.93458 5.34684L11.2813 1.00018"
-            stroke="#292D32"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </p>
+              onClick={handleClick}
+              style={{
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "4px",
+              }}
+            >
+              RECOMMENDED
+              <svg
+                width="12"
+                height="7"
+                viewBox="0 0 12 7"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0.721251 1.00017L5.06792 5.34684C5.58125 5.86018 6.42125 5.86018 6.93458 5.34684L11.2813 1.00018"
+                  stroke="#292D32"
+                  strokeMiterlimit="10"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </p>
 
-      <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        transformOrigin={{ vertical: "top", horizontal: "left" }}
-      >
-        <MenuItem onClick={handleClose}>Newest first</MenuItem>
-        <MenuItem onClick={handleClose}>popular</MenuItem>
-        <MenuItem onClick={handleClose}>Price : high to low</MenuItem>
-        <MenuItem onClick={handleClose}>Price : low to high</MenuItem>
-      </Menu>
+            <Menu
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+              transformOrigin={{ vertical: "top", horizontal: "left" }}
+            >
+              <MenuItem onClick={handleClose}>Newest first</MenuItem>
+              <MenuItem onClick={handleClose}>popular</MenuItem>
+              <MenuItem onClick={handleClose}>Price : high to low</MenuItem>
+              <MenuItem onClick={handleClose}>Price : low to high</MenuItem>
+            </Menu>
           </div>
 
           {loading ? (
             <Loader />
           ) : (
             <div className="filter-product">
-              <Filter/>
+              <Filter />
               <div className="product-grid">
                 {products.map((product) => (
                   <ProductCard key={product.id} product={product} />
