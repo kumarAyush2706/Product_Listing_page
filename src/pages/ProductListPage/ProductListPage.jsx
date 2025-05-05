@@ -14,7 +14,7 @@ const ProductListPage = () => {
   const [loading, setLoading] = useState(true);
   const [showFilter, setShowFilter] = useState(true);
   const [fileterdProducts, setfileterdProducts] = useState(products);
-  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState({});
 
   useEffect(() => {
     fetchProducts()
@@ -28,6 +28,7 @@ const ProductListPage = () => {
 
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
+  console.log("selected Filters ", selectedFilters);
 
   return (
     <>
@@ -46,13 +47,15 @@ const ProductListPage = () => {
         <main className="product-list-page">
           <div className="filter-tab">
             <p>
-              <strong>{products.length}</strong>{" "}
+              <strong className="product-count">{products.length} Items</strong>{" "}
               <svg
                 width="139"
                 height="40"
                 viewBox="0 0 139 40"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                onClick={() => setShowFilter(!showFilter)}
+                style={{ cursor: "pointer" }}
               >
                 <rect width="138" height="40" fill="white" />
                 <path
@@ -117,7 +120,7 @@ const ProductListPage = () => {
             <Loader />
           ) : (
             <div className="filter-product">
-              <Filter />
+              <Filter showFilter={showFilter} setShowFilter={setShowFilter} selectedFilters={selectedFilters} setSelectedFilters ={setSelectedFilters} />
               <div className="product-grid">
                 {products.map((product) => (
                   <ProductCard key={product.id} product={product} />

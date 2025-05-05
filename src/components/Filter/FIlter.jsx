@@ -12,12 +12,17 @@ const filters = {
   Pattern: ["Plain", "Striped", "Checked"],
 };
 
-const Filter = () => {
-  const [showFilter, setShowFilter] = useState(true);
+const Filter = ({
+  showFilter,
+  setShowFilter,
+  selectedFilters,
+  setSelectedFilters
+}) => {
+  // const [showFilter, setShowFilter] = useState(true);
   const [expanded, setExpanded] = useState({});
-  const [selectedFilters, setSelectedFilters] = useState({});
+  // const [selectedFilters, setSelectedFilters] = useState({});
 
-  console.log(selectedFilters)
+  // console.log(selectedFilters);
   const toggleExpand = (section) => {
     setExpanded((prev) => ({ ...prev, [section]: !prev[section] }));
   };
@@ -34,16 +39,16 @@ const Filter = () => {
 
   return (
     <div className="product-page">
-      <button
+      {/* <button
         className="toggle-button"
         onClick={() => setShowFilter(!showFilter)}
       >
         {showFilter ? "Hide Filters" : "Show Filters"}
-      </button>
+      </button> */}
 
       {showFilter && (
         <div className="sidebar">
-          <label> 
+          <label style={{fontSize: "0.75rem", fontWeight:"bold"}}>
             <input type="checkbox" /> CUSTOMIZABLE
           </label>
 
