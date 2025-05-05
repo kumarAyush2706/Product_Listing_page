@@ -2,16 +2,22 @@ import ProductListPage from "./pages/ProductListPage/ProductListPage";
 import Login from "./pages/LoginSignUP/Login";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-const AppRoutes = ({ user, setUser }) => {
+const AppRoutes = () => {
+  const token = localStorage.getItem("token_123");
+
   return (
     <Routes>
       <Route
         path="/"
-        element={user && user.username ? <ProductListPage /> : <Navigate to="/login"  />}
+        element={token ? <ProductListPage /> : <Navigate to="/login"  />}
       />
       <Route
         path="/login"
-        element={user && user.username ? <Navigate to="/"  /> : <Login user={user} setUser={setUser} />}
+        element={token? <Navigate to="/"  /> : <Login />}
+      />
+      <Route
+        path="/logout"
+        element={ <Login />}
       />
       <Route
         path="*"

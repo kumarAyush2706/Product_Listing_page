@@ -5,12 +5,13 @@ import AppRoutes from "./AppRoutes";
 import { useState } from "react";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const token = localStorage.getItem("token_123");
+
   return (
     <>
-      {user && <Header />}
-      <AppRoutes user={user} setUser={setUser} />
-      {user && <Footer />}
+      {token && <Header />}
+      <AppRoutes />
+      {token && <Footer />}
     </>
   );
 }

@@ -16,6 +16,9 @@
     object-fit: contain;
     padding: 10px;
   }
+  .product-card h3{
+    margin: 0 12px;
+  }
   
   .product-info {
     display: flex;

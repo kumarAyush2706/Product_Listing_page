@@ -72,9 +72,9 @@ const Filter = ({
                   <path
                     d="M0.721251 0.999778L5.06792 5.34645C5.58125 5.85978 6.42125 5.85978 6.93458 5.34645L11.2813 0.999778"
                     stroke="#292D32"
-                    stroke-miterlimit="10"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeMiterlimit="10"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               </div>

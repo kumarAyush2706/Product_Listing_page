@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import {
   Container, TextField, Button, Typography, Box, Paper, Grid,
 } from '@mui/material';
+import axios from 'axios';
+import { Navigate, useNavigate } from 'react-router-dom';
 
-const Login = ({user, setUser}) => {
+const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [form, setForm] = useState({
     email: '',
@@ -16,23 +18,32 @@ const Login = ({user, setUser}) => {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
-      const res = await fetch('https://fakestoreapi.com/users');
-      const users = await res.json();
+      // const res = await fetch('https://fakestoreapi.com/users');
+      // const users = await res.json();
 
-      const curr_user = users.find(
-        (u) => u.password === form.password && u.username === form.username
-      );
-      console.log(curr_user)
+      // const curr_user = users.find(
+      //   (u) => u.password === form.password && u.username === form.username
+      // );
+      // console.log(curr_user)
 
-      if (curr_user) {
+      // if (curr_user) {
+      //   setMessage('Login successful!');
+      //   setUser(curr_user);
+      // } else {
+      //   setMessage('Invalid credentials!');
+      //   setUser(null)
+      // }
+
+      const res = await axios.post("https://fakestoreapi.com/auth/login", {username: form.username, password: form.password});
+      const data = res.data; 
+      if (data.token) {
+        localStorage.setItem("token_123", data.token)
         setMessage('Login successful!');
-        setUser(curr_user);
-      } else {
-        setMessage('Invalid credentials!');
-        setUser(null)
+        navigate("/")
       }
     } catch (err) {
       console.error(err);
