@@ -13,26 +13,42 @@ const ProductListPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showFilter, setShowFilter] = useState(true);
-  const [fileterdProducts, setfileterdProducts] = useState(products);
+  const [fileterdProducts, setfileterdProducts] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({});
 
   useEffect(() => {
     fetchProducts()
-      .then((data) => setProducts(data))
+      .then((data) => {
+        setProducts(data);
+        setfileterdProducts(data);
+      })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   }, []);
+
+  const filterProducts = (products, selectedFilters) => {
+    const filteredProducts = products.filter((product) => {
+        let tags = Object.values(selectedFilters).flat();
+        if (tags.length === 0) return products;
+        return tags.some((tag) => product.category.includes(tag.toLowerCase()));
+      });
+      setfileterdProducts(filteredProducts);
+  };
+
+  useEffect(() => {
+    filterProducts(products, selectedFilters);
+  }, [selectedFilters, setSelectedFilters]);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
-  console.log("selected Filters ", selectedFilters);
+  console.log("Filtered Products ", fileterdProducts);
 
   return (
     <>
-      <Header />
+      
       <div className="product-Main">
         <div className="page-heading">
           <div>
@@ -47,7 +63,9 @@ const ProductListPage = () => {
         <main className="product-list-page">
           <div className="filter-tab">
             <p>
-              <strong className="product-count">{products.length} Items</strong>{" "}
+              <strong className="product-count">
+                {fileterdProducts.length} Items
+              </strong>{" "}
               <svg
                 width="139"
                 height="40"
@@ -120,9 +138,14 @@ const ProductListPage = () => {
             <Loader />
           ) : (
             <div className="filter-product">
-              <Filter showFilter={showFilter} setShowFilter={setShowFilter} selectedFilters={selectedFilters} setSelectedFilters ={setSelectedFilters} />
+              <Filter
+                showFilter={showFilter}
+                setShowFilter={setShowFilter}
+                selectedFilters={selectedFilters}
+                setSelectedFilters={setSelectedFilters}
+              />
               <div className="product-grid">
-                {products.map((product) => (
+                {fileterdProducts.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
               </div>
@@ -130,7 +153,7 @@ const ProductListPage = () => {
           )}
         </main>
       </div>
-      <Footer />
+      
     </>
     // <>
     // <Login/>

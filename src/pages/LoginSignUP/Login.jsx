@@ -3,7 +3,7 @@ import {
   Container, TextField, Button, Typography, Box, Paper, Grid,
 } from '@mui/material';
 
-const AuthPage = () => {
+const Login = ({user, setUser}) => {
   const [isLogin, setIsLogin] = useState(true);
   const [form, setForm] = useState({
     email: '',
@@ -22,14 +22,17 @@ const AuthPage = () => {
       const res = await fetch('https://fakestoreapi.com/users');
       const users = await res.json();
 
-      const user = users.find(
-        (u) => u.email === form.email && u.username === form.username
+      const curr_user = users.find(
+        (u) => u.password === form.password && u.username === form.username
       );
+      console.log(curr_user)
 
-      if (user) {
+      if (curr_user) {
         setMessage('Login successful!');
+        setUser(curr_user);
       } else {
         setMessage('Invalid credentials!');
+        setUser(null)
       }
     } catch (err) {
       console.error(err);
@@ -88,7 +91,7 @@ const AuthPage = () => {
           {isLogin ? 'Login' : 'Signup'}
         </Typography>
         <form onSubmit={handleSubmit}>
-          <TextField
+          {/* <TextField
             label="Email"
             name="email"
             value={form.email}
@@ -96,7 +99,7 @@ const AuthPage = () => {
             fullWidth
             margin="normal"
             required
-          />
+          /> */}
           <TextField
             label="Username"
             name="username"
@@ -146,4 +149,4 @@ const AuthPage = () => {
   );
 };
 
-export default AuthPage;
+export default Login;
