@@ -1,0 +1,205 @@
+.footer {
+  background-color: #000;
+  color: #fff;
+  padding: 40px 250px;
+  font-family: 'Arial', sans-serif;
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.newsletter h4,
+.contact-info h4,
+.currency-info h4 {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.newsletter p,
+.contact-info p,
+.currency-info p {
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+.newsletter-form {
+  display: flex;
+  margin-top: 30px;
+}
+
+.newsletter-form input {
+  padding: 10px;
+  width: 290px;
+  border: none;
+  border-radius: 2px;
+}
+
+.newsletter-form button {
+  padding: 10px 16px;
+  margin-left: 8px;
+  background-color: #1c1c1c;
+  color: #fff;
+  border: 1px solid #fff;
+  cursor: pointer;
+}
+
+.newsletter-form button:hover {
+  background-color: #333;
+}
+
+.flag {
+  width: 20px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.footer-links-section {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  gap: 30px;
+}
+
+.link-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.link-column h4 {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 12px;
+  margin: 10px 0;
+}
+
+.icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.icon:hover {
+  color: #aaa;
+}
+
+.payments img {
+  height: 30px;
+  margin-right: 8px;
+  margin-top: 10px;
+}
+
+hr {
+  border: 0.5px solid #444;
+  margin: 30px 0;
+}
+
+.footer small {
+  font-size: 12px;
+  color: #aaa;
+}
+
+.copyright {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 30px;
+  color: #aaa;
+}
+
+
+/* 🔶 Responsive for tablets (≤768px) */
+@media (max-width: 768px) {
+  .footer {
+    padding: 30px 60px;
+  }
+
+  .footer-top,
+  .footer-links-section {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .newsletter-form input,
+  .newsletter-form button {
+    width: 85%;
+  }
+
+  .link-column {
+    width: 100%;
+  }
+
+  .footer a {
+    font-size: 16px;
+  }
+
+  .icon {
+    font-size: 18px;
+  }
+
+  .payments img {
+    height: 26px;
+  }
+
+  .copyright {
+    font-size: 11px;
+  }
+}
+
+/* 🔻 Responsive for mobile (≤512px) */
+@media (max-width: 512px) {
+  .footer {
+    padding: 20px;
+  }
+
+  .newsletter h4,
+  .contact-info h4,
+  .currency-info h4 {
+    font-size: 15px;
+  }
+
+  .footer a {
+    font-size: 15px;
+  }
+
+  .footer-top,
+  .footer-links-section {
+    gap: 25px;
+  }
+
+  .icon {
+    font-size: 16px;
+  }
+
+  .payments img {
+    height: 24px;
+  }
+
+  .copyright {
+    font-size: 10px;
+    margin-top: 20px;
+  }
+}
