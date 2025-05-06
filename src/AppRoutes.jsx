@@ -5,18 +5,46 @@ import NotFound from "./pages/NotFound/NotFound";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
 import Cart from "./pages/Cart/Cart";
 import { useSelector } from "react-redux";
+import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header";
 
 const AppRoutes = () => {
-  const {token} = useSelector(state => state.auth)
+  const { user, token } = useSelector((state) => state.auth);
 
   return (
     <Routes>
-      <Route path="/" element={token?<ProductListPage />:  <Navigate to="/login" />} />
-      <Route path="/product/:id" element={<ProductDetails />} />
-      <Route path="/cart" element={<Cart />} />
+      <Route
+        path="/"
+        element={
+          <>
+            <Header user={user} />
+            <ProductListPage />
+            <Footer />
+          </>
+        }
+      />
+      <Route
+        path="/product/:id"
+        element={
+          <>
+            <Header user={user} />
+            <ProductDetails />
+            <Footer />
+          </>
+        }
+      />
+      <Route
+        path="/cart"
+        element={
+          <>
+            <Header user={user} />
+            <Cart />
+            <Footer />
+          </>
+        }
+      />
       <Route path="/login" element={token ? <Navigate to="/" /> : <Login />} />
-      <Route path="/logout" element={<Login />} />
-      <Route path="*" element={<NotFound/>} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

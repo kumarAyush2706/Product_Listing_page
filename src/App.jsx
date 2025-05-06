@@ -5,17 +5,14 @@ import AppRoutes from "./AppRoutes";
 import { useSelector } from "react-redux";
 
 function App() {
-  const {user, token} = useSelector(state => state.auth)
-
+  const { user, token } = useSelector((state) => state.auth);
 
   // console.log(user, token)
 
-
   return (
     <>
-      {token && <Header user={user}/>}
+      
       <AppRoutes />
-      {token && <Footer />}
     </>
   );
 }

@@ -1,16 +1,3 @@
-export const decodeJWT = (token) => {
-  if (token) {
-    try {
-      const payload = token.split(".")[1];
-      const decoded = JSON.parse(atob(payload));
-      return decoded;
-    } catch (err) {
-      console.error("Failed to decode token", err);
-      return null;
-    }
-  }
-  return null;
-};
 
 export const decodeAndValidateJWT = (token) => {
     if (!token) return { valid: false, reason: 'Token missing' };

@@ -16,6 +16,8 @@ const ProductDetails = () => {
   const [ProductDetails, setProductDetails] = useState(null);
   const cartDetails = useSelector((state) => state.cart.items);
 
+  const { user, token } = useSelector((state) => state.auth);
+
   const currItem =
     cartDetails && cartDetails.length > 0
       ? cartDetails.find((item) => item.id === Number(productId))
@@ -74,7 +76,9 @@ const ProductDetails = () => {
                 -
               </button>
               <span>{Number(currItem.quantity)}</span>
-              <button onClick={() => dispatch(removeFromCart({ id: productId }))}>
+              <button
+                onClick={() => dispatch(IncQuantity({ id: productId }))}
+              >
                 +
               </button>
               <Link
@@ -86,12 +90,19 @@ const ProductDetails = () => {
             </div>
           )}
 
-          <button
-            style={{ marginTop: "20px", padding: "10px 20px" }}
-            onClick={() => handleAddToCart()}
-          >
-            Add to Cart
-          </button>
+          {user && token && !currItem && (
+            <button
+              style={{ marginTop: "20px", padding: "10px 20px" }}
+              onClick={() => handleAddToCart()}
+            >
+              Add to Cart
+            </button>
+          )}
+
+          {
+            !user && !token && 
+            <Link to={"/login"} style={{ marginTop: "20px", padding: "10px 20px" }}>Please login to shop!</Link>
+          }
         </div>
       </div>
     </div>

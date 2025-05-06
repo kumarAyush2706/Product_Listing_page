@@ -1,19 +1,17 @@
 // src/features/authSlice.js
 import { createSlice } from "@reduxjs/toolkit";
-import { decodeAndValidateJWT, decodeJWT } from "../../services/decodebase64";
+import { decodeAndValidateJWT } from "../../services/decodebase64";
 
 // Decode JWT and extract payload
 
 // Initialize token from localStorage
 const tokenFromStorage = localStorage.getItem("token_123");
-const decoded = tokenFromStorage
-  ? decodeAndValidateJWT(tokenFromStorage)
-  : null;
-
+console.log(tokenFromStorage);
+const decoded = decodeAndValidateJWT(tokenFromStorage);
 
 const initialState = {
-  token: decoded.valid ? tokenFromStorage: null,
-  user:  decoded.valid && decoded.payload ? decoded.payload.user: null ,
+  token: decoded.valid ? tokenFromStorage : null,
+  user: decoded.valid && decoded.payload ? decoded.payload.user : null,
 };
 
 const authSlice = createSlice({

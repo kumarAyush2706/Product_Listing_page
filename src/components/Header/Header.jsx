@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Header.css";
 import { Menu, MenuItem } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Header = ({user}) => {
  const [anchorEl, setAnchorEl] = useState(null);
@@ -140,7 +141,7 @@ const Header = ({user}) => {
             />
           </svg>
 
-          {user}
+          {user? user: <Link to={"/login"}>LogIn</Link>}
         </div>
       </nav>
       <div className="main-head">
