@@ -8,6 +8,7 @@ import Footer from "../../components/Footer/Footer.jsx";
 import Filter from "../../components/Filter/FIlter.jsx";
 import Login from "../LoginSignUP/Login.jsx";
 import { Menu, MenuItem } from "@mui/material";
+import { Link, Navigate } from "react-router-dom";
 
 const ProductListPage = () => {
   const [products, setProducts] = useState([]);
@@ -44,38 +45,37 @@ const ProductListPage = () => {
 
   const sortProducts = (products, sortType) => {
     const sortedProducts = [...products]; // clone to avoid mutating original array
-  
+
     switch (sortType) {
-      case 'new':
+      case "new":
         // Assuming newest products have higher IDs
         sortedProducts.sort((a, b) => b.id - a.id);
         break;
-  
-      case 'popular':
+
+      case "popular":
         // Sort by rating count (most rated products first)
         sortedProducts.sort((a, b) => b.rating.count - a.rating.count);
         break;
-  
-      case 'price_high':
+
+      case "price_high":
         // Sort by price descending
         sortedProducts.sort((a, b) => b.price - a.price);
         break;
-  
-      case 'price_low':
+
+      case "price_low":
         // Sort by price ascending
         sortedProducts.sort((a, b) => a.price - b.price);
         break;
-  
+
       default:
-        console.warn('Unknown sort type');
+        console.warn("Unknown sort type");
     }
-  
+
     return sortedProducts;
   };
-  
 
   const handleSort = (sortInd) => {
-    setfileterdProducts(sortProducts(fileterdProducts, sortInd))
+    setfileterdProducts(sortProducts(fileterdProducts, sortInd));
   };
 
   const handleClick = (event) => setAnchorEl(event.currentTarget);

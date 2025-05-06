@@ -2,14 +2,18 @@ import "./App.css";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import AppRoutes from "./AppRoutes";
-import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function App() {
-  const token = localStorage.getItem("token_123");
+  const {user, token} = useSelector(state => state.auth)
+
+
+  // console.log(user, token)
+
 
   return (
     <>
-      {token && <Header />}
+      {token && <Header user={user}/>}
       <AppRoutes />
       {token && <Footer />}
     </>

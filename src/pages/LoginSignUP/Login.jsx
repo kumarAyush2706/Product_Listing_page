@@ -4,6 +4,8 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '../../redux/features/authSlice';
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -14,6 +16,7 @@ const Login = () => {
     name: '',
   });
   const [message, setMessage] = useState('');
+  const dispatch = useDispatch()
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -41,7 +44,8 @@ const Login = () => {
       const res = await axios.post("https://fakestoreapi.com/auth/login", {username: form.username, password: form.password});
       const data = res.data; 
       if (data.token) {
-        localStorage.setItem("token_123", data.token)
+        console.log(data.token)
+        dispatch(setCredentials({token: data.token}))
         setMessage('Login successful!');
         navigate("/")
       }
