@@ -13,6 +13,7 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cartDetails = useSelector((state) => state.cart.items);
   const [total, setTotal] = useState(0);
+  const [isClearing, setIsClearing] = useState(false);
   const navigate = useNavigate();
   const { user, token } = useSelector((state) => state.auth);
 
@@ -22,83 +23,170 @@ const Cart = () => {
       0
     );
     setTotal(totalAmount);
-  }, cartDetails);
+  }, [cartDetails]);
 
-  console.log(cartDetails);
+  const handleClearCart = () => {
+    if (window.confirm("Are you sure you want to clear your cart?")) {
+      setIsClearing(true);
+      dispatch(clearCart());
+      setTimeout(() => setIsClearing(false), 1000);
+    }
+  };
+
+  const handleQuantityChange = (id, action) => {
+    if (action === 'decrease') {
+      dispatch(DecQuantity({ id }));
+    } else {
+      dispatch(IncQuantity({ id }));
+    }
+  };
+
+  const handleRemoveItem = (id, title) => {
+    if (window.confirm(`Remove "${title}" from cart?`)) {
+      dispatch(removeFromCart({ id }));
+    }
+  };
+
+  const formatPrice = (price) => {
+    return `$${price.toFixed(2)}`;
+  };
 
   return (
     <div className="cart-container">
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          width: "100%",
-        }}
-      >
-        <p
+      <div className="cart-header">
+        <button 
+          className="back-button"
           onClick={() => navigate(-1)}
-          style={{ textDecoration: "none", color: "inherit" }}
         >
-          ← Go back
-        </p>
-        {user && token && (
+          ← Back to Shopping
+        </button>
+        {user && token && cartDetails.length > 0 && (
           <button
-            className="checkout-btn"
-            onClick={() => dispatch(clearCart())}
+            className="clear-cart-btn"
+            onClick={handleClearCart}
+            disabled={isClearing}
           >
-            Clear Cart
+            {isClearing ? "Clearing..." : "Clear Cart"}
           </button>
         )}
       </div>
-      <h1>Your Cart</h1>
-      {user && token ? (
-        cartDetails.length === 0 ? (
-          <p className="empty-cart">Your cart is empty.</p>
+
+      <div className="cart-content">
+        <h1 className="cart-title">Your Shopping Cart</h1>
+        
+        {!user || !token ? (
+          <div className="login-prompt-container">
+            <div className="login-prompt">
+              <h3>Please log in to view your cart</h3>
+              <p>Sign in to access your saved items and complete your purchase.</p>
+              <Link to="/login" className="login-btn">
+                Login to Continue
+              </Link>
+            </div>
+          </div>
+        ) : cartDetails.length === 0 ? (
+          <div className="empty-cart-container">
+            <div className="empty-cart">
+              <div className="empty-cart-icon">🛒</div>
+              <h3>Your cart is empty</h3>
+              <p>Looks like you haven't added any items to your cart yet.</p>
+              <Link to="/" className="continue-shopping-btn">
+                Continue Shopping
+              </Link>
+            </div>
+          </div>
         ) : (
           <>
-            {cartDetails.map((item) => (
-              <div key={item.id} className="cart-item">
-                <Link to={`/product/${item.id}`}>
-                  <img src={item.image} alt={item.title} className="cart-img" />
-                </Link>
-                <div className="cart-details">
-                  <h2>{item.brand}</h2>
-                  <p>{item.title}</p>
-                  <div className="cart-price">₹{item.price}</div>
-                  <div className="cart-qty">
-                    <button
-                      onClick={() => dispatch(DecQuantity({ id: item.id }))}
-                    >
-                      -
-                    </button>
-                    <span>{item.quantity}</span>
-                    <button
-                      onClick={() => dispatch(IncQuantity({ id: item.id }))}
-                    >
-                      +
-                    </button>
+            <div className="cart-items">
+              {cartDetails.map((item) => (
+                <div key={item.id} className="cart-item">
+                  <div className="cart-item-image">
+                    <Link to={`/product/${item.id}`}>
+                      <img src={item.image} alt={item.title} />
+                    </Link>
                   </div>
-                  <button
-                    className="remove-btn"
-                    onClick={() => dispatch(removeFromCart({ id: item.id }))}
-                  >
-                    Remove
-                  </button>
+                  
+                  <div className="cart-item-details">
+                    <div className="cart-item-info">
+                      <h3 className="cart-item-title">
+                        <Link to={`/product/${item.id}`}>
+                          {item.title}
+                        </Link>
+                      </h3>
+                      {item.category && (
+                        <span className="cart-item-category">
+                          {item.category}
+                        </span>
+                      )}
+                      <div className="cart-item-price">
+                        {formatPrice(item.price)}
+                      </div>
+                    </div>
+                    
+                    <div className="cart-item-controls">
+                      <div className="quantity-controls">
+                        <button
+                          className="quantity-btn"
+                          onClick={() => handleQuantityChange(item.id, 'decrease')}
+                          disabled={item.quantity <= 1}
+                        >
+                          -
+                        </button>
+                        <span className="quantity-display">
+                          {item.quantity}
+                        </span>
+                        <button
+                          className="quantity-btn"
+                          onClick={() => handleQuantityChange(item.id, 'increase')}
+                        >
+                          +
+                        </button>
+                      </div>
+                      
+                      <div className="cart-item-subtotal">
+                        Subtotal: {formatPrice(item.price * item.quantity)}
+                      </div>
+                      
+                      <button
+                        className="remove-item-btn"
+                        onClick={() => handleRemoveItem(item.id, item.title)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <div className="cart-summary">
+              <div className="cart-total-section">
+                <div className="cart-total-row">
+                  <span>Items ({cartDetails.length}):</span>
+                  <span>{formatPrice(total)}</span>
+                </div>
+                <div className="cart-total-row">
+                  <span>Shipping:</span>
+                  <span>Free</span>
+                </div>
+                <div className="cart-total-row total">
+                  <span>Total:</span>
+                  <span>{formatPrice(total)}</span>
                 </div>
               </div>
-            ))}
-            <div className="cart-total">
-              <h3>Total: ₹{total}</h3>
-              <button className="checkout-btn">Proceed to Checkout</button>
+              
+              <div className="cart-actions">
+                <Link to="/" className="continue-shopping-btn secondary">
+                  Continue Shopping
+                </Link>
+                <button className="checkout-btn">
+                  Proceed to Checkout
+                </button>
+              </div>
             </div>
           </>
-        )
-      ) : (
-        <p className="empty-cart">
-          Please <Link to={"/login"}>LogIn</Link> to view your cart.
-        </p>
-      )}
+        )}
+      </div>
     </div>
   );
 };

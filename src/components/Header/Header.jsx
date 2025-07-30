@@ -58,6 +58,7 @@ const Header = ({user}) => {
         <MenuItem onClick={handleClose}>ABOUT</MenuItem>
         <MenuItem onClick={handleClose}>CONTACT US</MenuItem>
       </Menu>
+      <Link to="/">
           <svg
             width="36"
             height="36"
@@ -70,6 +71,7 @@ const Header = ({user}) => {
               fill="black"
             />
           </svg>
+          </Link> 
         </div>
         <div className="heading">LOGO</div>
         <div className="nav-icons">
@@ -88,6 +90,7 @@ const Header = ({user}) => {
               strokeLinejoin="round"
             />
           </svg>
+          <Link to="/cart">
           <svg
             width="24"
             height="24"
@@ -117,6 +120,7 @@ const Header = ({user}) => {
               strokeLinejoin="round"
             />
           </svg>
+          </Link>
 
           <svg
             width="24"
