@@ -64,7 +64,7 @@
   transform: scale(1.02);
 }
 
-.product-info {
+.Product-info {
   display: flex;
   flex-direction: column;
   gap: 20px;

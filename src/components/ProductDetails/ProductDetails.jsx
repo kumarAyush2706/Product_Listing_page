@@ -125,7 +125,7 @@ const ProductDetails = () => {
             />
           </div>
           
-          <div className="product-info">
+          <div className="Product-info">
             <h1 className="product-title">{productDetails.title}</h1>
             
             <h2 className="product-price">${productDetails.price}</h2>

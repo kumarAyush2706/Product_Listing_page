@@ -125,7 +125,7 @@ const Footer = () => (
       </div>
 
       <div className="copyright">
-        Copyright © 2023 mettamuse. All rights reserved.
+        Copyright © 2025 Archer. All rights reserved.
       </div>
     </footer>
 );
